@@ -69,13 +69,16 @@ def get_argument_options(line):
 
     options = {
         '--host': '127.0.0.1',
-        '--port': '43800',
+        '--port': '43801',
         '--base-path': '/notebook'
     }
     for arg in args[1:]:
         key, value = arg.split('=', 1)
         if key in supported_args:
             options[key] = value
+
+    if options.get("--proxy-url"):
+        options["--base-path"] = "/proxy/" + options["--port"] + options["--base-path"]
 
     return command, options
 
@@ -112,8 +115,8 @@ def display_notebook(host, port, display, proxy_url=None):
     import IPython.display
     url = "{}:{}{}".format(host, port, '/notebook/')
     if proxy_url:
-        url = "{}/{}{}".format(proxy_url, port, '/notebook/')
-
+        url = "{}{}{}{}".format(proxy_url, "/proxy/", port, '/notebook/')
+        print(url)
     shell = """
           <iframe id="aim" width="100%" height="800" frameborder="0" src={}>
           </iframe>
