@@ -6,7 +6,10 @@ from aim.web.api.utils import APIRouter  # wrapper for fastapi.APIRouter
 from fastapi.responses import FileResponse, HTMLResponse
 from fastapi.templating import Jinja2Templates
 
-from aim.web.configs import AIM_UI_BASE_PATH
+from aim.web.configs import (
+    AIM_UI_BASE_PATH,
+    AIM_SERVER_PORT_KEY
+)
 statics_router = APIRouter()
 
 
@@ -34,5 +37,8 @@ async def serve_index_html(request: Request):
     template_files_dir = os.path.join(os.path.dirname(web.__file__), 'ui', 'build')
     templates = Jinja2Templates(directory=template_files_dir)
     base_path = os.environ.get(AIM_UI_BASE_PATH, '')
+    if base_path == '/sage':
+        port = os.environ.get(AIM_SERVER_PORT_KEY)
+        return templates.TemplateResponse('index-template-sage.html', {'request': request, 'base_path': base_path, 'public_path': '/proxy/' + port + '/sage'})
 
     return templates.TemplateResponse('index-template.html', {'request': request, 'base_path': base_path})

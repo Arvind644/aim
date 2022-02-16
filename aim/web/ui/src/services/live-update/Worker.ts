@@ -230,8 +230,8 @@ export function errorHandler(error: ResponseType) {
   invariantError(error, logging);
 }
 
-function replaceBasePath(basePath: string) {
-  setAPIBasePath(basePath);
+function replaceBasePath(basePath: string, href: string) {
+  setAPIBasePath(basePath, href);
 }
 
 const WebWorker = {

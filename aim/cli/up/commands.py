@@ -9,6 +9,7 @@ from aim.web.configs import (
     AIM_UI_DEFAULT_PORT,
     AIM_UI_MOUNTED_REPO_PATH,
     AIM_UI_TELEMETRY_KEY,
+    AIM_SERVER_PORT_KEY
 )
 from aim.sdk.repo import Repo, RepoStatus
 from aim.sdk.utils import clean_repo_path
@@ -118,7 +119,7 @@ def up(dev, host, port, workers, repo, tf_logs, ssl_keyfile, ssl_certfile, base_
 
     click.echo('Open {}://{}:{}{}'.format(scheme, host, port, base_path), err=True)
     click.echo('Press Ctrl+C to exit')
-
+    os.environ[AIM_SERVER_PORT_KEY] = str(port)
     try:
         server_cmd = build_uvicorn_command(host, port, workers, ssl_keyfile, ssl_certfile)
         exec_cmd(server_cmd, stream_output=True)

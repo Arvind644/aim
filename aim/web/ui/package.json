@@ -1,6 +1,6 @@
 {
   "name": "ui_v2",
-  "version": "3.5.5-rc2",
+  "version": "3.5.5-rc3",
   "private": true,
   "dependencies": {
     "@aksel/structjs": "^1.0.0",
@@ -43,7 +43,7 @@
   },
   "scripts": {
     "start": "react-app-rewired --max_old_space_size=4096 start",
-    "build": "react-app-rewired --max_old_space_size=4096 build && gzipper c -i js,css,html ./build && node tasks/index-html-template-generator.js",
+    "build": "react-app-rewired --max_old_space_size=4096 build && gzipper c -i js,css,html ./build && node tasks/index-html-template-generator.js && node tasks/index-html-sage-template-generator.js",
     "test": "react-app-rewired test ",
     "test:coverage": "react-app-rewired test --collectCoverage",
     "test:watch": "react-app-rewired test --watchAll",
